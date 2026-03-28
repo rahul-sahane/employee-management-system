@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumina Prism | Confirm Sign Out</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-background": "#ecedf6",
+                "surface-container-high": "#1c2028",
+                "secondary-dim": "#874cff",
+                "surface-variant": "#22262f",
+                "on-surface": "#ecedf6",
+                "on-error-container": "#ffa8a3",
+                "secondary-fixed-dim": "#ceb9ff",
+                "surface-dim": "#0b0e14",
+                "surface": "#0b0e14",
+                "secondary": "#ac89ff",
+                "surface-container-lowest": "#000000",
+                "tertiary-container": "#15ffd1",
+                "primary-container": "#00eefc",
+                "tertiary-fixed": "#15ffd1",
+                "tertiary-fixed-dim": "#00efc4",
+                "on-secondary": "#290067",
+                "background": "#0b0e14",
+                "surface-tint": "#8ff5ff",
+                "error": "#ff716c",
+                "inverse-primary": "#006a71",
+                "tertiary": "#b9ffe8",
+                "secondary-container": "#7000ff",
+                "on-tertiary": "#006653",
+                "on-tertiary-fixed-variant": "#006854",
+                "on-secondary-fixed-variant": "#6300e2",
+                "primary-dim": "#00deec",
+                "tertiary-dim": "#00e9bf",
+                "surface-container": "#161a21",
+                "on-primary": "#005d63",
+                "on-secondary-fixed": "#41009a",
+                "on-error": "#490006",
+                "on-secondary-container": "#f8f1ff",
+                "surface-container-low": "#10131a",
+                "secondary-fixed": "#dac9ff",
+                "outline-variant": "#45484f",
+                "error-dim": "#d7383b",
+                "on-tertiary-container": "#005d4b",
+                "primary-fixed-dim": "#00deec",
+                "outline": "#73757d",
+                "surface-container-highest": "#22262f",
+                "on-primary-fixed": "#003f43",
+                "on-primary-container": "#005359",
+                "primary": "#8ff5ff",
+                "on-primary-fixed-variant": "#005e64",
+                "on-tertiary-fixed": "#00483a",
+                "on-surface-variant": "#a9abb3",
+                "inverse-on-surface": "#52555c",
+                "inverse-surface": "#f9f9ff",
+                "error-container": "#9f0519",
+                "surface-bright": "#282c36",
+                "primary-fixed": "#00eefc"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(34, 38, 47, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(143, 245, 255, 0.15);
+        }
+        .neon-glow {
+            box-shadow: 0 0 40px -10px rgba(0, 238, 252, 0.2);
+        }
+        .bg-gradient-mesh {
+            background-color: #0b0e14;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(143, 245, 255, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(172, 137, 255, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(0, 0, 0, 1) 0px, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-mesh font-body text-on-background min-h-screen flex items-center justify-center p-6 overflow-hidden">
+<!-- Subtle Background Elements -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]"></div>
+</div>
+<!-- Log Out Confirmation Modal -->
+<main class="relative z-10 w-full max-w-lg">
+<div class="glass-panel neon-glow rounded-xl p-8 md:p-12 text-center transition-all duration-500 scale-100">
+<!-- Icon/Branding -->
+<div class="mb-8 flex justify-center">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+<div class="relative w-20 h-20 bg-surface-container rounded-full flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">logout</span>
+</div>
+</div>
+</div>
+<!-- Content -->
+<h1 class="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface mb-4">
+                Ready to sign out?
+            </h1>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-10 max-w-sm mx-auto">
+                You are about to end your session in <span class="text-primary font-semibold">Lumina Prism</span>. Please ensure all your work is saved.
+            </p>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<!-- Secondary Button (Cancel) -->
+<a class="order-2 sm:order-1 w-full sm:w-auto px-8 py-4 rounded-xl font-headline font-bold text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/40 transition-all duration-300 border border-transparent hover:border-outline-variant/30 group flex items-center justify-center gap-2" href="#">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Return to Dashboard
+                </a>
+<!-- Primary Button (Log Out) -->
+<button class="order-1 sm:order-2 w-full sm:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-on-secondary font-headline font-extrabold tracking-wide shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2">
+                    Sign Out
+                    <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">logout</span>
+</button>
+</div>
+<!-- Footer Meta -->
+<div class="mt-12 pt-8 border-t border-outline-variant/10">
+<div class="flex items-center justify-center gap-4 text-xs font-medium text-outline uppercase tracking-[0.2em]">
+<span>Lumina Prism</span>
+<span class="w-1 h-1 bg-outline/40 rounded-full"></span>
+<span>Executive Portal</span>
+</div>
+</div>
+</div>
+<!-- Session Preservation Notice -->
+<div class="mt-8 text-center">
+<p class="text-sm text-on-surface-variant/60 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-base">info</span>
+                Your active data tables will be auto-saved locally.
+            </p>
+</div>
+</main>
+<!-- Visual Polish: Floating Particles (Aesthetic only) -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+<div class="absolute top-1/4 left-1/4 w-1 h-1 bg-primary rounded-full"></div>
+<div class="absolute top-1/3 right-1/4 w-2 h-2 bg-secondary rounded-full blur-[2px]"></div>
+<div class="absolute bottom-1/4 left-1/2 w-1.5 h-1.5 bg-tertiary rounded-full blur-[1px]"></div>
+<div class="absolute top-2/3 left-1/3 w-1 h-1 bg-primary rounded-full"></div>
+</div>
+</body></html>
