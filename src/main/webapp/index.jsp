@@ -60,7 +60,7 @@
         </div>
         <div class="user-info" onclick="navigate('settings')">
           <div class="details">
-            <p>Alex Sterling</p>
+            <p>Mr. Rahul</p>
             <p>Chief Administrator</p>
           </div>
           <div class="user-avatar"><span class="material-symbols-outlined">person</span></div>
@@ -84,6 +84,17 @@
   <!-- Background Decorations -->
   <div style="position:fixed;top:-10%;right:-10%;width:40%;height:40%;background:rgba(143,245,255,0.04);filter:blur(120px);border-radius:50%;z-index:-1"></div>
   <div style="position:fixed;bottom:-10%;left:-10%;width:30%;height:30%;background:rgba(172,137,255,0.04);filter:blur(100px);border-radius:50%;z-index:-1"></div>
+
+  <%-- Backend Toast: Servlet sets session attributes, JSP reads and shows them --%>
+  <script>
+  <% String msg = (String) session.getAttribute("toastMessage");
+     String type = (String) session.getAttribute("toastType");
+     session.removeAttribute("toastMessage");
+     session.removeAttribute("toastType"); %>
+  <% if (msg != null) { %>
+    window.addEventListener('DOMContentLoaded', function(){ toast("<%= msg %>", "<%= type %>"); });
+  <% } %>
+  </script>
 
   <script src="app.js"></script>
 </body>
