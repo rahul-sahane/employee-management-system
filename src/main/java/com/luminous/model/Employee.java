@@ -59,6 +59,42 @@ public class Employee {
 		return dateOfJoining;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setAnnualSalary(String annualSalary) {
+		this.annualSalary = annualSalary;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setDateOfJoining(String dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", fullname=" + fullname + ", email=" + email + ", phoneNumber=" + phoneNumber
