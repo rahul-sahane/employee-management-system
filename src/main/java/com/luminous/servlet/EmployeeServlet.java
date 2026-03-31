@@ -24,7 +24,7 @@ public class EmployeeServlet extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if ("list".equals(action)) {
-			// For now, return empty list (until you add getAllEmployees in DAO)
+			//return empty list (until you add getAllEmployees in DAO)
 			out.print("{\"success\": true, \"employees\": []}");
 		}
 
@@ -51,7 +51,7 @@ public class EmployeeServlet extends HttpServlet {
 			String salary = request.getParameter("salary");
 			String status = request.getParameter("status");
 
-			// Auto generate employee joining date
+			// generate default employee joining date 
 			String date = java.time.LocalDate.now().toString();
 
 			Employee employee = new Employee(0, name, email, phone, department, role, salary, status, date);
