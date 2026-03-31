@@ -22,13 +22,21 @@ public class EmployeeServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		String action = request.getParameter("action");
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		
 
 		if ("list".equals(action)) {
-			//return empty list (until you add getAllEmployees in DAO)
-			out.print("{\"success\": true, \"employees\": []}");
+		// return list of employee in json format
+			try {
+				// calling a method to fetch all employee data from database with the help of EmployeeDAO class
+				employeeDAO.getAllEmployees();
+				out.print("{\"success\": true, \"mesaage\": \" \"}");
+			}catch (SQLException e) {
+				out.println("{\"success\": false, \"message\": \"Failed to fetch Employees data!\"}");
+			}
 		}
 
-		out.flush();
+		//out.flush();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -2,7 +2,10 @@ package com.luminous.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.luminous.model.Employee;
 import com.luminouse.util.DBConnection;
@@ -30,5 +33,33 @@ public class EmployeeDAO {
 			 psmt.executeUpdate();
 			 
 			 }
+	}
+	
+	public List<Employee> getAllEmployees() throws SQLException {
+		List<Employee> employees = new ArrayList<>();
+		
+		String getAllEmployeesQuery = "SELECT * FROM SMART_EMPLOYEE_MANAGEMENT";
+		
+		 try(
+				 Connection conn = DBConnection.getConnection();
+				 PreparedStatement pstmt = conn.prepareStatement(getAllEmployeesQuery);
+				 ){
+			 ResultSet rs = pstmt.executeQuery();
+			 
+			 while(rs.next()) {
+					Employee emp = new Employee(
+							rs.getInt("id"), 
+							rs.getString("fullName"), 
+							rs.getString("email"),
+							rs.getString("phoneNumber"), 
+							rs.getString("departmentName"), 
+							rs.getString("role"),
+							rs.getString("annualSalary"), 
+							rs.getString("status"), 
+							rs.getString("dateOfJoining"));
+					employees.add(emp);
+			 }
+		 }
+		 return employees;
 	}
 }
