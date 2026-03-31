@@ -20,7 +20,7 @@ function fetchEmployees() {
   fetch('EmployeeServlet?action=list')
     .then(res => res.json())
     .then(data => {
-      employees = data.employees;
+      employees = data.employees || [];
       if (data.message) toast(data.message, data.success ? 'success' : 'error');
       renderView(getCurrentRoute());
     })

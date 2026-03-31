@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.luminous.dao.EmployeeDAO;
 import com.luminous.model.Employee;
@@ -23,20 +24,37 @@ public class EmployeeServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 		EmployeeDAO employeeDAO = new EmployeeDAO();
-		
 
 		if ("list".equals(action)) {
 		// return list of employee in json format
 			try {
 				// calling a method to fetch all employee data from database with the help of EmployeeDAO class
-				employeeDAO.getAllEmployees();
-				out.print("{\"success\": true, \"mesaage\": \" \"}");
+				List<Employee> empList = employeeDAO.getAllEmployees();
+				StringBuilder json = new StringBuilder();
+				json.append("{\"success\": true, \"message\": \"\", \"employees\": [");
+				for (int i = 0; i < empList.size(); i++) {
+					Employee emp = empList.get(i);
+					if (i > 0) json.append(",");
+					json.append("{");
+					json.append("\"id\":\"").append(emp.getId()).append("\",");
+					json.append("\"name\":\"").append(emp.getFullName()).append("\",");
+					json.append("\"email\":\"").append(emp.getEmail()).append("\",");
+					json.append("\"phone\":\"").append(emp.getPhoneNumber()).append("\",");
+					json.append("\"department\":\"").append(emp.getDapartmentName()).append("\",");
+					json.append("\"role\":\"").append(emp.getjobTitle()).append("\",");
+					json.append("\"salary\":").append(emp.getAnnualSalary()).append(",");
+					json.append("\"status\":\"").append(emp.getStatus()).append("\",");
+					json.append("\"joinDate\":\"").append(emp.getDateOfJoining()).append("\"");
+					json.append("}");
+				}
+				json.append("]}");
+				out.print(json.toString());
 			}catch (SQLException e) {
-				out.println("{\"success\": false, \"message\": \"Failed to fetch Employees data!\"}");
+				out.println("{\"success\": false, \"message\": \"Failed to fetch Employees data!\", \"employees\": []}");
 			}
 		}
 
-		//out.flush();
+		out.flush();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
