@@ -42,9 +42,7 @@ function addEmployeeToBackend(emp) {
     .then(res => res.json())
     .then(data => {
       toast(data.message, data.success ? 'success' : 'error');
-      employees = data.employees;
-      if (data.success) navigate('employees');
-      else renderView(getCurrentRoute());
+      if (data.success) { fetchEmployees(); navigate('employees'); }
     })
     .catch(() => toast('Server not reachable.', 'error'));
 }
@@ -65,9 +63,7 @@ function updateEmployeeInBackend(emp) {
     .then(res => res.json())
     .then(data => {
       toast(data.message, data.success ? 'success' : 'error');
-      employees = data.employees;
-      if (data.success) navigate('employees');
-      else renderView(getCurrentRoute());
+      if (data.success) { fetchEmployees(); navigate('employees'); }
     })
     .catch(() => toast('Server not reachable.', 'error'));
 }
@@ -77,8 +73,7 @@ function deleteEmployeeFromBackend(id) {
     .then(res => res.json())
     .then(data => {
       toast(data.message, data.success ? 'success' : 'error');
-      employees = data.employees;
-      renderView(getCurrentRoute());
+      if (data.success) fetchEmployees();
     })
     .catch(() => toast('Server not reachable.', 'error'));
 }
