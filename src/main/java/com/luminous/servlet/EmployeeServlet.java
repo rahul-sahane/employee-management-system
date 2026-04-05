@@ -15,9 +15,24 @@ import com.luminous.model.Employee;
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// Allow cross-origin requests so frontend works from any URL
+	private void setCorsHeaders(HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	}
+
+	@Override
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		setCorsHeaders(response);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		setCorsHeaders(response);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
@@ -41,7 +56,7 @@ public class EmployeeServlet extends HttpServlet {
 					json.append("\"email\":\"").append(emp.getEmail()).append("\",");
 					json.append("\"phone\":\"").append(emp.getPhoneNumber()).append("\",");
 					json.append("\"department\":\"").append(emp.getDapartmentName()).append("\",");
-					json.append("\"role\":\"").append(emp.getjobTitle()).append("\",");
+					json.append("\"role\":\"").append(emp.getRole()).append("\",");
 					json.append("\"salary\":").append(emp.getAnnualSalary()).append(",");
 					json.append("\"status\":\"").append(emp.getStatus()).append("\",");
 					json.append("\"joinDate\":\"").append(emp.getDateOfJoining()).append("\"");
@@ -60,6 +75,7 @@ public class EmployeeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		setCorsHeaders(response);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
@@ -88,6 +104,38 @@ public class EmployeeServlet extends HttpServlet {
 				out.print("{\"success\": false, \"message\": \"Failed to add employee!\"}");
 				e.printStackTrace();
 			}
+		}
+		
+		if("update".equals(action)) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String department = request.getParameter("department");
+			String role = request.getParameter("role");
+			String salary = request.getParameter("salary");
+			String status = request.getParameter("status");
+
+			// generate default employee joining date 
+			String date = java.time.LocalDate.now().toString();
+			
+			Employee employee = new Employee(id, name, email, phone, department, role, salary, status, date);
+			
+			try {
+				int rowsUpdated = employeeDAO.updateEmployee(employee);
+				
+				//checking row updated or not
+				if (rowsUpdated > 0) {
+					out.print("{\"success\": true, \"message\": \"Employee updated!\"}");
+				} else {
+					out.print("{\"success\": false, \"message\": \"Employee not found with id: " + id + "\"}");
+				}
+			}catch (SQLException e){
+				out.print("{\"success\": false, \"message\": \"Employee updation failed: " + e.getMessage() + "\"}");
+				e.printStackTrace();
+			}
+			
 		}
 
 		out.flush();

@@ -44,7 +44,7 @@ public class Employee {
 		return departmentName;
 	}
 
-	public String getjobTitle() {
+	public String getRole() {
 		return role;
 	}
 

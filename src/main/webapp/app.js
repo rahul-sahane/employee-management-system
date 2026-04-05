@@ -13,14 +13,18 @@ const ROLES = ['Senior Associate','Lead Director','Principal Engineer','VP of Op
 // ===== EMPLOYEE DATA (Loaded from backend when connected) =====
 let employees = [];
 
+// ===== BACKEND API BASE URL =====
+// Change the port/context if your Tomcat configuration is different
+const BASE_URL = 'http://localhost:9090/SmartEmployeeManagement/EmployeeServlet';
+
 // ===== BACKEND API FUNCTIONS =====
 // All logic & messages handled by Servlet. JS only sends data, shows response, refreshes UI.
 
 function fetchEmployees() {
-  fetch('EmployeeServlet?action=list')
+  fetch(BASE_URL + '?action=list')
     .then(res => res.json())
     .then(data => {
-      employees = data.employees || [];
+      employees = (data.employees || []).map(e => ({ ...e, salary: Number(e.salary) || 0 }));
       if (data.message) toast(data.message, data.success ? 'success' : 'error');
       renderView(getCurrentRoute());
     })
@@ -38,7 +42,7 @@ function addEmployeeToBackend(emp) {
   params.append('salary', emp.salary);
   params.append('status', emp.status);
 
-  fetch('EmployeeServlet', { method: 'POST', body: params })
+  fetch(BASE_URL, { method: 'POST', body: params })
     .then(res => res.json())
     .then(data => {
       toast(data.message, data.success ? 'success' : 'error');
@@ -69,7 +73,7 @@ function updateEmployeeInBackend(emp) {
 }
 
 function deleteEmployeeFromBackend(id) {
-  fetch('EmployeeServlet?action=delete&id=' + id)
+  fetch(BASE_URL + '?action=delete&id=' + id)
     .then(res => res.json())
     .then(data => {
       toast(data.message, data.success ? 'success' : 'error');
@@ -136,7 +140,7 @@ function renderDashboard(){
   const total = employees.length;
   const active = employees.filter(e=>e.status==='active').length;
   const depts = [...new Set(employees.map(e=>e.department))].length;
-  const payroll = employees.filter(e=>e.status==='active').reduce((s,e)=>s+e.salary,0);
+  const payroll = employees.filter(e=>e.status==='active').reduce((s,e)=>s+(Number(e.salary)||0),0);
   const recent = [...employees].sort((a,b)=>new Date(b.joinDate)-new Date(a.joinDate)).slice(0,4);
   const deptStats = {};
   employees.forEach(e=>{ deptStats[e.department]=(deptStats[e.department]||0)+1; });
