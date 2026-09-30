@@ -1,0 +1,23 @@
+FROM tomcat:10.1-jdk17-temurin
+
+WORKDIR /app
+
+COPY src/main/webapp/ /usr/local/tomcat/webapps/ROOT/
+COPY src/main/java/ /app/src/main/java/
+
+RUN mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF/classes \
+    && find /app/src/main/java -name "*.java" > /tmp/sources.txt \
+    && javac -encoding UTF-8 \
+       -cp "/usr/local/tomcat/lib/servlet-api.jar:/usr/local/tomcat/webapps/ROOT/WEB-INF/lib/*" \
+       -d /usr/local/tomcat/webapps/ROOT/WEB-INF/classes \
+       @/tmp/sources.txt \
+    && rm -rf /app/src /tmp/sources.txt
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENV CATALINA_OPTS="-Djava.awt.headless=true"
+
+EXPOSE 8080
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
